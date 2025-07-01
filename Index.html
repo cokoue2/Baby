@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparatif Produits Bébé - Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+        }
+        
+        .header h1 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .filter-group {
+            margin-bottom: 10px;
+        }
+        
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .stats {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 10px;
+        }
+        
+        .stat-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+        
+        .mobile-cards {
+            padding: 15px;
+        }
+        
+        .product-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .article-name {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 1.1em;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .category-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        
+        .category-DORMIR { background: #fee; color: #e74c3c; }
+        .category-BAIN { background: #e3f2fd; color: #1976d2; }
+        .category-MANGER { background: #fff3e0; color: #f57c00; }
+        .category-SORTIE { background: #e8f5e8; color: #388e3c; }
+        .category-VÊTEMENTS { background: #f3e5f5; color: #7b1fa2; }
+        .category-AUTRES { background: #eceff1; color: #455a64; }
+        .category-MAMAN { background: #fce4ec; color: #c2185b; }
+        
+        .status-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        
+        .checkbox-group label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .products-list {
+            border-top: 2px solid #f8f9fa;
+            padding-top: 15px;
+        }
+        
+        .product-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid transparent;
+        }
+        
+        .product-option.referent {
+            border-left-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .product-option.concurrent {
+            border-left-color: #28a745;
+        }
+        
+        .product-name {
+            font-weight: 500;
+            color: #495057;
+            flex: 1;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .referent .product-name {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 16px;
+            min-width: 60px;
+            text-align: right;
+        }
+        
+        .product-price::after {
+            content: ' €';
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        .price-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .price-low { background: #d4edda; color: #155724; }
+        .price-medium { background: #fff3cd; color: #856404; }
+        .price-high { background: #f8d7da; color: #721c24; }
+        
+        .option-label {
+            font-size: 0.7em;
+            color: #6c757d;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .search-highlight {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .floating-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #667eea;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-fab:hover {
+            background: #5a67d8;
+            transform: scale(1.1);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        /* Optimisations tactiles */
+        input, select, button {
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Amélioration des performances sur mobile */
+        .product-card {
+            will-change: transform;
+        }
+        
+        /* Mode paysage sur mobile */
+        @media screen and (orientation: landscape) and (max-height: 500px) {
+            .header {
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 1.3em;
+            }
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍼 Produits Bébé</h1>
+            <p>Guide d'achat mobile-friendly</p>
+        </div>
+        
+        <div class="controls">
+            <div class="filter-group">
+                <label for="categoryFilter">Catégorie</label>
+                <select id="categoryFilter">
+                    <option value="">Toutes les catégories</option>
+                    <option value="DORMIR">🛏️ Dormir</option>
+                    <option value="BAIN">🛁 Bain</option>
+                    <option value="MANGER">🍼 Manger</option>
+                    <option value="SORTIE">🚗 Sortie</option>
+                    <option value="VÊTEMENTS">👕 Vêtements</option>
+                    <option value="AUTRES">🧸 Autres</option>
+                    <option value="MAMAN">👩 Maman</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="budgetFilter">Budget maximum (€)</label>
+                <input type="number" id="budgetFilter" placeholder="Ex: 100" min="0">
+            </div>
+            
+            <div class="filter-group">
+                <label for="searchFilter">Rechercher un article</label>
+                <input type="text" id="searchFilter" placeholder="Ex: matelas, gigoteuse...">
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="totalItems">0</span>
+                <span class="stat-label">Articles</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="checkedItems">0</span>
+                <span class="stat-label">Achetés</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="totalBudget">0</span>
+                <span class="stat-label">Budget (€)</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="progressPercent">0</span>
+                <span class="stat-label">% Fini</span>
+            </div>
+        </div>
+        
+        <div class="mobile-cards" id="cardsContainer">
+            <!-- Les cartes seront générées par JavaScript -->
+        </div>
+        
+        <div class="empty-state hidden" id="emptyState">
+            <div class="empty-state-icon">🔍</div>
+            <h3>Aucun résultat</h3>
+            <p>Essayez de modifier vos filtres</p>
+        </div>
+    </div>
+    
+    <button class="floating-fab" onclick="scrollToTop()" title="Retour en haut">
+        ↑
+    </button>
+
+    <script>
+        const productsData = [
+            ["Lit", "DORMIR", "BabyBjörn Light", 300, "Chicco Next2Me Dream", 250, "Vertbaudet Jacob", 200],
+            ["Matelas", "DORMIR", "Tedi by Tediber", 160, "Emma Matelas Bébé", 130, "Mokee Naturel", 180],
+            ["Draps housse (2)", "DORMIR", "Petit Bateau Lot 2", 25, "Vertbaudet Lot 2", 18, "H&M Conscious Lot 2", 12],
+            ["Alèse (2)", "DORMIR", "P'tit Lit Imperméable", 20, "Candide Molleton", 15, "Babycalin Éponge", 12],
+            ["Armoire", "DORMIR", "IKEA Stuva", 180, "Vertbaudet Sirius", 250, "Paidi Fiona", 400],
+            ["Cintres", "DORMIR", "Petit Bateau Lot 10", 15, "IKEA Bagis Enfant", 3, "Vertbaudet Lot 8", 12],
+            ["Gigoteuse 0-6 mois 1 TOG", "DORMIR", "Tommee Tippee Grobag", 35, "Red Castle Ergonomique", 40, "Vertbaudet Collection", 25],
+            ["Gigoteuse 6 mois été", "DORMIR", "Aden + Anais Twinkle", 45, "Tommee Tippee Steppee", 30, "Vertbaudet Été", 20],
+            ["Mobile", "DORMIR", "Trousselier Musical", 50, "Fisher-Price Rêves Papillon", 35, "IKEA Leka", 15],
+            ["Veilleuse / bruits blancs", "DORMIR", "Babymoov Squeezy", 35, "Pabobo Lumilove", 25, "VTech Kidimagic", 40],
+            ["Cododo", "DORMIR", "Chicco Next2Me Magic", 280, "Kinderkraft Neste Up", 180, "Waldin Cododo", 150],
+            ["Babyphone", "DORMIR", "Philips Avent DECT", 120, "Motorola MBP8", 80, "VTech BM2000", 60],
+            ["Table à langer", "DORMIR", "Geuther Hanna", 150, "IKEA Sniglar", 80, "Vertbaudet Ligne Roset", 200],
+            ["Matelas à langer", "DORMIR", "Candide Déhoussable", 25, "P'tit Lit Confort", 18, "Babycalin Basic", 12],
+            ["Housse de rechange", "DORMIR", "Candide Jersey", 12, "Vertbaudet Lot 2", 15, "P'tit Lit", 8],
+            ["Lit parapluie", "DORMIR", "BabyBjörn Light", 300, "Chicco Easy Sleep", 150, "Hauck Sleep'n Play", 80],
+            ["Veilleuse nomade", "DORMIR", "Pabobo Nomade", 20, "VTech Kidimagic Star", 25, "IKEA Spöka", 8],
+            ["Fauteuil", "DORMIR", "Tutti Bambini Glider", 400, "IKEA Poäng", 120, "Vertbaudet Voltaire", 280],
+            ["Baignoire", "BAIN", "Stokke Flexi Bath", 80, "Béaba Cameleóon", 45, "Tigex Anatomique", 25],
+            ["Thermomètre bain", "BAIN", "Philips Avent Digital", 15, "Béaba Lotus", 12, "Chicco Fish", 8],
+            ["Cape de bain (3)", "BAIN", "Petit Bateau Lot 3", 45, "Vertbaudet Lot 3", 35, "H&M Lot 3", 18],
+            ["Poubelle à couches", "BAIN", "Tommee Tippee Twist&Click", 120, "Angelcare Dress-Up", 100, "Korbell Plus", 80],
+            ["Brosse douce", "BAIN", "Chicco Naturalness", 8, "Béaba Soft Touch", 6, "NUK Baby", 4],
+            ["Ciseau bout rond", "BAIN", "Chicco Safety", 12, "Béaba 4-en-1", 15, "NUK Basic", 8],
+            ["Thermomètre", "BAIN", "Braun ThermoScan 7", 50, "Chicco Infrarouge", 35, "Beurer FT15", 20],
+            ["Couches", "BAIN", "Pampers Baby Dry", 25, "Huggies Ultra Comfort", 24, "Love & Green", 22],
+            ["Gel lavant corps cheveux", "BAIN", "Mustela Bébé", 12, "Weleda Calendula", 10, "Mixa Bébé", 6],
+            ["Cotons", "BAIN", "Gilbert Carrés", 4, "Mustela Bio", 5, "Marque repère", 2],
+            ["Sérum physiologique", "BAIN", "Gilbert Dosettes x30", 8, "Gifrer x40", 6, "Marque repère x20", 3],
+            ["Crème change", "BAIN", "Mustela 123", 8, "Weleda Calendula", 12, "Mixa Bébé", 5],
+            ["Crème hydratante", "BAIN", "Mustela Hydra Bébé", 10, "Weleda Calendula", 8, "Nivea Baby", 4],
+            ["Eau nettoyante", "BAIN", "Mustela Sans Rinçage", 8, "Uriage 1ère Eau", 10, "Mixa Bébé", 5],
+            ["Désinfectant cordon", "BAIN", "Biseptine Spray", 8, "Chlorhexidine Cooper", 5, "Gifrer Septeal", 6],
+            ["Compresses", "BAIN", "Gilbert Stériles x20", 5, "Urgo Stériles x25", 4, "Marque repère x30", 3],
+            ["Tapis anti dérapant baignoire", "BAIN", "Tigex Canard", 15, "Béaba Anti-dérapant", 12, "IKEA Patrull", 8],
+            ["Jouets pour le bain", "BAIN", "Sophie la Girafe Set", 25, "Playgro Float & Play", 18, "IKEA Klappar", 12],
+            ["Trousse de toilette", "BAIN", "Vertbaudet Hibou", 20, "Red Castle Trousse", 15, "IKEA Förnyad", 8],
+            ["Mouche-bébé", "BAIN", "Nosiboo Pro", 120, "Béaba Tomydoo", 35, "NUK Nasal Aspirator", 15],
+            ["Liniment", "BAIN", "Gifrer Oléo-Calcaire", 8, "Mustela Liniment", 10, "Love & Green", 6],
+            ["Lingettes bébé", "BAIN", "Water Wipes", 4, "Pampers Aqua Pure", 3, "Love & Green", 3],
+            ["Coussin allaitement", "MANGER", "Red Castle Big Flopsy", 60, "Béaba Buddy", 45, "Doomoo Buddy", 35],
+            ["Bavoirs petites tailles (5)", "MANGER", "Petit Bateau Lot 5", 25, "Vertbaudet Lot 5", 18, "H&M Lot 5", 10],
+            ["Bavoirs grandes tailles (5)", "MANGER", "Tommee Tippee Lot 5", 20, "Béaba Soft Lot 5", 25, "IKEA Kladd Lot 5", 8],
+            ["Cape de repas", "MANGER", "Béaba Babycape", 15, "Tommee Tippee Cape", 12, "IKEA Börja", 6],
+            ["Langes", "MANGER", "Petit Bateau Lot 6", 35, "Aden + Anais Lot 4", 40, "H&M Lot 8", 15],
+            ["Tire-lait", "MANGER", "Medela Freestyle Flex", 350, "Philips Avent Natural", 280, "Tommee Tippee Made for Me", 200],
+            ["Biberons", "MANGER", "MAM Easy Start", 8, "Philips Avent Natural", 7, "Dr Brown's Original", 10],
+            ["Egouttoir à biberons", "MANGER", "Béaba Arbre", 25, "Philips Avent", 20, "Tommee Tippee", 15],
+            ["Goupillon", "MANGER", "MAM Brush", 8, "Béaba Goupillon", 6, "Chicco Perfect5", 5],
+            ["Babycook", "MANGER", "Béaba Babycook Neo", 150, "Philips Avent 4-in-1", 120, "Babymoov Nutribaby+", 180],
+            ["Chaise haute", "MANGER", "Stokke Tripp Trapp", 250, "Cybex Lemo", 200, "Béaba Up&Down", 120],
+            ["Kit repas", "MANGER", "Béaba Silicone Set", 35, "Tommee Tippee Explora", 25, "IKEA Kalas", 8],
+            ["Tasse à bec", "MANGER", "MAM Trainer+", 12, "Tommee Tippee Sippee", 10, "NUK Learner", 8],
+            ["Cuillères petits pots", "MANGER", "Béaba Soft Spoon", 8, "MAM Soft Spoon", 6, "NUK Soft Tip", 5],
+            ["Pots conservation lait", "MANGER", "Avent Pots VIA", 15, "Béaba Clip Portions", 12, "MAM Storage", 10],
+            ["Pots conservation nourriture", "MANGER", "Béaba Maxi+ Portions", 18, "Philips Avent Portions", 15, "Tommee Tippee Pots", 10],
+            ["Poussette", "SORTIE", "Cybex Priam", 800, "Bugaboo Fox 5", 900, "UPPAbaby Vista V2", 750],
+            ["Habillage pluie poussette", "SORTIE", "Cybex Rain Cover", 50, "Universal Rain Cover", 25, "Maxi-Cosi Rain Cover", 35],
+            ["Spirale poussette", "SORTIE", "Tiny Love Spirale", 25, "Fisher-Price Miroir", 20, "IKEA Leka Mobile", 12],
+            ["Porte bébé", "SORTIE", "Ergobaby Omni 360", 180, "BabyBjörn One", 160, "Manduca XT", 140],
+            ["Echarpe portage", "SORTIE", "Je Porte Mon Bébé JPMBB", 60, "Néobulle Basic", 45, "Love Radius", 80],
+            ["Sac à dos à langer", "SORTIE", "Lässig Glam Goldie", 80, "Vertbaudet Adventure", 60, "Skip Hop Forma", 100],
+            ["Sac de voyage Bébé", "SORTIE", "Vertbaudet Weekend", 45, "IKEA Famnig", 25, "Lässig Adventure", 70],
+            ["Tapis à langer nomade", "SORTIE", "Lässig Changing Pouch", 25, "Vertbaudet Nomade", 18, "Red Castle Nomade", 30],
+            ["Couverture", "SORTIE", "Petit Bateau Maille", 35, "Vertbaudet Polaire", 25, "IKEA Len", 15],
+            ["Siège auto (2)", "SORTIE", "Cybex Cloud Z i-Size", 400, "Maxi-Cosi Pebble 360", 350, "Britax Römer Baby-Safe 3", 300],
+            ["Lunettes de soleil", "SORTIE", "Ki ET LA Jokaki", 25, "Béaba Sunglasses", 20, "Real Kids Shades", 18],
+            ["Miroir voiture", "SORTIE", "Munchkin Baby Mirror", 20, "Béaba Miroir", 15, "Safety 1st Mirror", 12],
+            ["Pares soleil voiture", "SORTIE", "Britax EZ-Cling", 15, "Munchkin Smart Shade", 12, "Universal Car Shade", 8],
+            ["Plaid à capuche pour siège auto", "SORTIE", "Maxi-Cosi Footmuff", 60, "Cybex Snogga", 80, "Universal Footmuff", 35],
+            ["Bodies 0 mois (4)", "VÊTEMENTS", "Petit Bateau Lot 4", 32, "Vertbaudet Lot 4", 20, "H&M Conscious Lot 4", 12],
+            ["Bodies 1 mois (10)", "VÊTEMENTS", "Petit Bateau Lot 10", 80, "Vertbaudet Lot 10", 50, "H&M Conscious Lot 10", 30],
+            ["Pyjamas 0 mois (4)", "VÊTEMENTS", "Jacadi Paris Lot 4", 100, "Absorba Lot 4", 72, "Kiabi Baby Lot 4", 32],
+            ["Pyjamas 1 mois (6)", "VÊTEMENTS", "Jacadi Paris Lot 6", 150, "Absorba Lot 6", 108, "Kiabi Baby Lot 6", 48],
+            ["Tenues 0 mois (2)", "VÊTEMENTS", "Bonpoint Ensemble", 120, "Jacadi Tenue", 80, "Vertbaudet Ensemble", 40],
+            ["Tenues 1 mois (6)", "VÊTEMENTS", "Bonpoint Lot 6", 720, "Jacadi Lot 6", 480, "Vertbaudet Lot 6", 240],
+            ["Combinaison pilote", "VÊTEMENTS", "Petit Bateau Pilote", 45, "Vertbaudet Pilote", 35, "H&M Pilote", 20],
+            ["Gilet", "VÊTEMENTS", "Jacadi Cachemire", 60, "Petit Bateau Coton", 35, "Vertbaudet Tricot", 25],
+            ["Bonnets (3)", "VÊTEMENTS", "Petit Bateau Lot 3", 30, "Vertbaudet Lot 3", 21, "H&M Lot 3", 12],
+            ["Chaussettes (2)", "VÊTEMENTS", "Petit Bateau Lot 2", 12, "Vertbaudet Lot 2", 8, "H&M Lot 2", 4],
+            ["Chaussons en laine", "VÊTEMENTS", "Petit Bateau Laine", 25, "Vertbaudet Tricot", 18, "H&M Maille", 10],
+            ["Tétines", "AUTRES", "MAM Perfect", 8, "Philips Avent Ultra Soft", 6, "NUK Genius", 7],
+            ["Attache tétine", "AUTRES", "MAM Clip", 5, "Philips Avent Clip", 4, "NUK Chain", 3],
+            ["Transat", "AUTRES", "BabyBjörn Bliss", 200, "Chicco Rocket", 80, "Maxi-Cosi Kori", 120],
+            ["Tapis d'éveil", "AUTRES", "Fisher-Price Tapis Piano", 80, "Bright Starts Safari Tales", 60, "VTech Lumi Tapis", 50],
+            ["Tétine doseuse", "AUTRES", "MAM Medicine Spoon", 8, "Béaba Doseur", 6, "NUK Syringe", 5],
+            ["Arche d'éveil", "AUTRES", "Fisher-Price Kick & Play", 50, "Tiny Love Take Along", 40, "VTech Baby Gym", 35],
+            ["Protège carnet de santé", "AUTRES", "Vertbaudet Cuir", 15, "Petit Bateau Tissu", 12, "IKEA Plastique", 5],
+            ["Jouets d'éveil", "AUTRES", "Sophie la Girafe", 25, "Fisher-Price Rock-a-Stack", 15, "VTech Stack & Tumble", 20],
+            ["Livre d'éveil", "AUTRES", "Lamaze Soft Book", 15, "Fisher-Price Laugh & Learn", 18, "VTech Baby Book", 12],
+            ["Bac jouet", "AUTRES", "IKEA Trofast", 25, "Vertbaudet Coffre", 45, "IKEA Flisat", 35],
+            ["Doudou", "AUTRES", "Kaloo Plume Lapin", 25, "Jellycat Bunny", 20, "IKEA Fabler", 8],
+            ["Kit sécurité", "AUTRES", "Safety 1st Complete", 35, "Reer Kit 46 pièces", 25, "IKEA Patrull Kit", 20],
+            ["Barrière d'escalier", "AUTRES", "Safety 1st Easy Install", 80, "Reer Basic Active-Lock", 60, "IKEA Patrull Klämma", 25],
+            ["Tapis de gym", "AUTRES", "Fisher-Price Kick & Play", 80, "VTech 2-in-1 Sports", 60, "Bright Starts Activity Gym", 45],
+            ["Culottes jetables", "MAMAN", "Tena Lady Maxi", 15, "Always Discreet", 12, "Carrefour Maternité", 8],
+            ["Serviettes hygiéniques gros flux", "MAMAN", "Always Ultra Night", 8, "Nana Ultra", 6, "Carrefour Protection", 4],
+            ["Huile vergeture", "MAMAN", "Weleda Huile Vergetures", 18, "Mustela Huile", 15, "Bi-Oil", 12],
+            ["Brassière allaitement", "MAMAN", "Medela Seamless", 35, "Carriwell Seamless", 25, "Mamsy Confort", 20],
+            ["Tenues allaitement", "MAMAN", "Seraphine Robe", 80, "H&M Mama Top", 25, "Vertbaudet Nursing", 45],
+            ["Crème mamelon", "MAMAN", "Lansinoh HPA Lanoline", 12, "Medela PureLan", 10, "Mustela Baume", 8],
+            ["Coussinets", "MAMAN", "Lansinoh Jetables x60", 8, "Medela Safe & Dry", 10, "Nuk Ultra Dry", 6],
+            ["Protège mamelon", "MAMAN", "Medela Contact", 25, "MAM Nipple Shield", 20, "Lansinoh Contact", 18]
+        ];
+
+        let currentData = [];
+
+        function generateCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            currentData = [];
+            
+            productsData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.dataset.category = item[1];
+                card.dataset.article = item[0].toLowerCase();
+                card.dataset.minPrice = Math.min(item[3], item[5], item[7]);
+                
+                const minPrice = Math.min(item[3], item[5], item[7]);
+                let priceClass = 'price-low';
+                if (minPrice > 20 && minPrice <= 100) priceClass = 'price-medium';
+                else if (minPrice > 100) priceClass = 'price-high';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="article-name">${item[0]}</div>
+                        <div class="category-badge category-${item[1]}">${item[1]}</div>
+                    </div>
+                    
+                    <div class="status-controls">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="done_${index}" onchange="updateStatus(${index}, 'done')">
+                            <label for="done_${index}">✅ Acheté</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="notdone_${index}" onchange="updateStatus(${index}, 'notdone')">
+                            <label for="notdone_${index}">❌ Pas fait</label>
+                        </div>
+                    </div>
+                    
+                    <div class="products-list">
+                        <div class="option-label">🏆 Produit référent</div>
+                        <div class="product-option referent">
+                            <div class="product-name">${item[2]}</div>
+                            <div class="product-price">${item[3]}</div>
+                        </div>
+                        
+                        <div class="option-label">🥈 Alternatives</div>
+                        <div class="product-option concurrent">
+                            <div class="product-name">${item[4]}</div>
+                            <div class="product-price">${item[5]}</div>
+                        </div>
+                        
+                        <div class="product-option concurrent">
+                            <div class="product-name">${item[6]}</div>
+                            <div class="product-price">${item[7]}</div>
+                            <span class="price-badge ${priceClass}">
+                                ${minPrice <= 20 ? 'Économique' : minPrice <= 100 ? 'Moyen' : 'Premium'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                currentData.push({
+                    element: card,
+                    data: item,
+                    checked: false,
+                    notChecked: false
+                });
+            });
+            
+            updateStats();
+        }
+
+        function updateStatus(itemId, status) {
+            const doneCheckbox = document.getElementById(`done_${itemId}`);
+            const notDoneCheckbox = document.getElementById(`notdone_${itemId}`);
+            
+            if (status === 'done' && doneCheckbox.checked) {
+                notDoneCheckbox.checked = false;
+                currentData[itemId].checked = true;
+                currentData[itemId].notChecked = false;
+            } else if (status === 'notdone' && notDoneCheckbox.checked) {
+                doneCheckbox.checked = false;
+                currentData[itemId].checked = false;
+                currentData[itemId].notChecked = true;
+            } else {
+                currentData[itemId].checked = false;
+                currentData[itemId].notChecked = false;
+            }
+            
+            updateStats();
+        }
+
+        function updateStats() {
+            const visibleItems = currentData.filter(item => item.element.style.display !== 'none');
+            const totalItems = visibleItems.length;
+            const checkedItems = visibleItems.filter(item => item.checked).length;
+            
+            let totalBudget = 0;
+            visibleItems.forEach(item => {
+                if (item.checked) {
+                    const minPrice = Math.min(item.data[3], item.data[5], item.data[7]);
+                    totalBudget += minPrice;
+                }
+            });
+            
+            const progressPercent = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+            
+            document.getElementById('totalItems').textContent = totalItems;
+            document.getElementById('checkedItems').textContent = checkedItems;
+            document.getElementById('totalBudget').textContent = totalBudget;
+            document.getElementById('progressPercent').textContent = progressPercent;
+        }
+
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const budgetFilter = parseFloat(document.getElementById('budgetFilter').value) || Infinity;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+            
+            let visibleCount = 0;
+            
+            currentData.forEach(item => {
+                const card = item.element;
+                const category = item.data[1];
+                const article = item.data[0].toLowerCase();
+                const minPrice = Math.min(item.data[3], item.data[5], item.data[7]);
+                
+                const categoryMatch = !categoryFilter || category === categoryFilter;
+                const budgetMatch = minPrice <= budgetFilter;
+                const searchMatch = !searchFilter || article.includes(searchFilter);
+                
+                if (categoryMatch && budgetMatch && searchMatch) {
+                    card.style.display = '';
+                    visibleCount++;
+                    
+                    // Highlight search terms
+                    if (searchFilter) {
+                        const articleNameEl = card.querySelector('.article-name');
+                        const originalText = item.data[0];
+                        const highlightedText = originalText.replace(
+                            new RegExp(searchFilter, 'gi'),
+                            match => `<span class="search-highlight">${match}</span>`
+                        );
+                        articleNameEl.innerHTML = highlightedText;
+                    } else {
+                        const articleNameEl = card.querySelector('.article-name');
+                        articleNameEl.textContent = item.data[0];
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show/hide empty state
+            const emptyState = document.getElementById('emptyState');
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+            
+            updateStats();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Event listeners
+        document.getElementById('categoryFilter').addEventListener('change', applyFilters);
+        document.getElementById('budgetFilter').addEventListener('input', applyFilters);
+        document.getElementById('searchFilter').addEventListener('input', applyFilters);
+
+        // Touch optimization
+        let touchStartY = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            // Improve scroll performance on mobile
+        }, { passive: true });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCards();
+            
+            // Set viewport for better mobile experience
+            const viewport = document.querySelector('meta[name=viewport]');
+            if (viewport) {
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+        });
+
+        // Performance optimization for mobile
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                updateStats();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
